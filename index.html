@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Navigation System</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; }
+        .input-group { margin-bottom: 15px; }
+        input[type="text"] { padding: 5px; width: 100px; margin-right: 10px; }
+        button { padding: 8px 15px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; }
+        .results { margin-top: 30px; padding: 15px; background-color: #f8f9fa; border: 1px solid #ddd; }
+        ul { list-style-type: none; padding: 0; }
+        li { padding: 5px 0; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+    <h2>Smart Navigation System (BFS vs DFS)</h2>
+    
+    <div class="input-group">
+        <strong>Add Connection (Edge):</strong><br>
+        Node 1: <input type="text" id="node1" placeholder="e.g., A">
+        Node 2: <input type="text" id="node2" placeholder="e.g., B">
+        <button onclick="addEdge()">Add Edge</button>
+    </div>
+
+    <div class="input-group">
+        <strong>Current Connections:</strong>
+        <ul id="edgeList"></ul>
+    </div>
+
+    <div class="input-group">
+        <strong>Find Route:</strong><br>
+        Start Node: <input type="text" id="startNode">
+        Goal Node: <input type="text" id="goalNode">
+        <button onclick="findRoute()">Find Path</button>
+    </div>
+
+    <div class="results" id="results" style="display:none;">
+        <h3>Results Comparison</h3>
+        
+        <h4>Breadth-First Search (BFS)</h4>
+        <p><strong>Path:</strong> <span id="bfsPath"></span></p>
+        <p><strong>Nodes Explored (Count):</strong> <span id="bfsExploredCount"></span></p>
+        <p><strong>Exploration Order:</strong> <span id="bfsExplored"></span></p>
+
+        <hr>
+
+        <h4>Depth-First Search (DFS)</h4>
+        <p><strong>Path:</strong> <span id="dfsPath"></span></p>
+        <p><strong>Nodes Explored (Count):</strong> <span id="dfsExploredCount"></span></p>
+        <p><strong>Exploration Order:</strong> <span id="dfsExplored"></span></p>
+    </div>
+
+    <script>
+        let edges = [];
+
+        function addEdge() {
+            const n1 = document.getElementById('node1').value.trim();
+            const n2 = document.getElementById('node2').value.trim();
+            if(n1 && n2) {
+                edges.push([n1, n2]);
+                const li = document.createElement('li');
+                li.textContent = `${n1} <--> ${n2}`;
+                document.getElementById('edgeList').appendChild(li);
+                document.getElementById('node1').value = '';
+                document.getElementById('node2').value = '';
+            }
+        }
+
+        async function findRoute() {
+            const start = document.getElementById('startNode').value.trim();
+            const goal = document.getElementById('goalNode').value.trim();
+            
+            if(edges.length === 0 || !start || !goal) {
+                alert("Please add edges, a start node, and a goal node.");
+                return;
+            }
+
+            const response = await fetch('/find_path', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ edges: edges, start: start, goal: goal })
+            });
+
+            const data = await response.json();
+            
+            document.getElementById('results').style.display = 'block';
+            
+            document.getElementById('bfsPath').textContent = Array.isArray(data.bfs.path) ? data.bfs.path.join(' → ') : data.bfs.path;
+            document.getElementById('bfsExploredCount').textContent = data.bfs.nodes_explored_count;
+            document.getElementById('bfsExplored').textContent = data.bfs.explored.join(', ');
+
+            document.getElementById('dfsPath').textContent = Array.isArray(data.dfs.path) ? data.dfs.path.join(' → ') : data.dfs.path;
+            document.getElementById('dfsExploredCount').textContent = data.dfs.nodes_explored_count;
+            document.getElementById('dfsExplored').textContent = data.dfs.explored.join(', ');
+        }
+    </script>
+</body>
+</html>
