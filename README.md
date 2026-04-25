@@ -3,12 +3,12 @@
 **Repository:** AI_ProblemSolving_<RA2411050050001>
 
 ## Problem 8: Smart Navigation System
-[cite_start]This project implements a smart navigation system required to find routes between different locations, similar to Google Maps[cite: 87, 88]. [cite_start]The user can input a start node, a goal node, and a set of connections between locations through an interactive web interface[cite: 89]. [cite_start]The system dynamically builds a graph and finds a path between the start and goal nodes[cite: 90].
+This project implements a smart navigation system required to find routes between different locations, similar to Google Maps.The user can input a start node, a goal node, and a set of connections between locations through an interactive web interface.The system dynamically builds a graph and finds a path between the start and goal nodes.
 
 ### Algorithms Used
-[cite_start]The solution implements and compares the following search strategies[cite: 91]:
-* [cite_start]**Breadth-First Search (BFS)** [cite: 91]
-* [cite_start]**Depth-First Search (DFS)** [cite: 91]
+The solution implements and compares the following search strategies:
+**Breadth-First Search (BFS)**
+**Depth-First Search (DFS)** 
 
 ### Execution Steps
 1. Ensure Python is installed on your system.
@@ -35,8 +35,8 @@
 * Exploration Order: A, C, D, E
 
 ### Algorithm Comparison
-[cite_start]As required by the assignment, here is the comparison between the two methods[cite: 93]:
+As required by the assignment, here is the comparison between the two methods
 
-* [cite_start]**Path Optimality:** BFS always guarantees the optimal (shortest) path in an unweighted graph because it explores all neighbors at the present depth before moving deeper[cite: 93]. [cite_start]DFS does not guarantee an optimal path; it returns the first path it finds[cite: 93].
-* [cite_start]**Number of Nodes Explored:** BFS typically explores more nodes if the goal is deep, as it checks every possibility level by level[cite: 93]. [cite_start]DFS can explore fewer nodes if the goal node happens to lie on the first deep path it checks, but it can also explore many more if it goes down the wrong branch[cite: 93].
-* [cite_start]**Efficiency of Traversal:** BFS requires more memory to store the queue of nodes at the current level[cite: 93]. [cite_start]DFS is more memory-efficient as it only needs to store the current path stack, but it can be less efficient in terms of time if it gets stuck exploring deep, incorrect paths[cite: 93].
+**Path Optimality:** BFS always guarantees the optimal (shortest) path in an unweighted graph because it explores all neighbors at the present depth before moving deeper.DFS does not guarantee an optimal path; it returns the first path it finds.
+**Number of Nodes Explored:** BFS typically explores more nodes if the goal is deep, as it checks every possibility level by level. DFS can explore fewer nodes if the goal node happens to lie on the first deep path it checks, but it can also explore many more if it goes down the wrong branch.
+**Efficiency of Traversal:** BFS requires more memory to store the queue of nodes at the current level.DFS is more memory-efficient as it only needs to store the current path stack, but it can be less efficient in terms of time if it gets stuck exploring deep, incorrect paths.
